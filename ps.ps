@@ -1,0 +1,27 @@
+SqlConnection = New-Object System.Data.SqlClient.SqlConnection
+$SqlConnection.ConnectionString = "Server = $SQLServer; Database = $SQLDBName; User ID = $SQLUserName; Password = $SQLPassword"
+
+$SqlCmd = New-Object System.Data.SqlClient.SqlCommand
+$SqlCmd.CommandText = $SQLQuery
+$SqlCmd.Connection = $SqlConnection
+
+$SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter
+$SqlAdapter.SelectCommand = $SqlCmd
+
+$dsRecords = New-Object System.Data.DataSet
+$SqlAdapter.Fill($dsRecords)
+
+$SqlConnection.Close()
+
+
+try
+{
+    foreach ($row in $dsRecords.Tables[0].Rows)
+    {
+        if($row[0]){}
+    }
+}
+finally
+{
+    Write-Host "Close"
+}
